@@ -15,6 +15,7 @@ namespace RealEstateProject.AppService.Abstract
     {
         Task Add(CreateEstateDto createEstateDto);
         Task <IEnumerable<GetEstateDto>> GetFiltredEstates (FilteredEstateDto filteredList);
-
+        Task Delete(DeleteEstateDto deleteEstateDto);
+        Task Update(UpdateEstateDto updateEstateDto);
     }
 }

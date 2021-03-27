@@ -31,12 +31,23 @@ namespace RealEstateProject.AppService.Concrete
            await _estateManager.Add(estate);
         }
 
+        public async Task Delete(DeleteEstateDto deleteEstateDto)
+        {
+            await _estateManager.Delete(deleteEstateDto.Id);
+        }
+
         public async Task <IEnumerable<GetEstateDto>> GetFiltredEstates (FilteredEstateDto filteredList)
         {
             var spec = new EstateFilterSpecification(filteredList.squareMeter, filteredList.heatingTypeId, filteredList.floor, filteredList.numberOfLivingRooms, filteredList.numberOfRooms, filteredList.isFurnished, filteredList.totalNumberOfBuildingFloors, filteredList.estateTypeId, filteredList.districtId);
-            var estate = _estateManager.GetAllEstates(spec.ToExpression());
+            var estate = await _estateManager.GetAllEstates(spec.ToExpression());
             var dtoEstate = _objectMapper.Map<List<GetEstateDto>>(estate);
-            return  dtoEstate;
+            return dtoEstate;
+        }
+
+        public async Task Update(UpdateEstateDto updateEstateDto)
+        {
+            var updateEstate = _objectMapper.Map<Estate>(updateEstateDto);
+            await _estateManager.Update(updateEstate);
         }
     }
 }
